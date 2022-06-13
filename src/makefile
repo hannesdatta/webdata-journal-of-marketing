@@ -1,10 +1,13 @@
 # Makefile, describing the order of execution and dependencies
 # for the source code in this project.
 
-all: ../output/barchart_collapsed.png ../output/tables_and_figures.html
+all: ../output/barchart_collapsed.png ../output/tables_and_figures.html install
 
 clean: 
 	Rscript cleanup.R
+
+phony install: 
+	Rscript install_packages.R
 	
 ../output/barchart_collapsed.pdf ../output/barchart_collapsed.png ../output/tables_and_figures.html: tables_and_figures.Rmd ../data/final_coding.csv ../data/final_papers.csv
 	Rscript -e "rmarkdown::render('tables_and_figures.Rmd',output_file='../output/tables_and_figures.html')"

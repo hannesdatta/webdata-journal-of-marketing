@@ -10,10 +10,9 @@
 rm(list = ls())
 
 # Load packages
-library(knitr)
-library(bibliometrix)
 library(stringr)
 library(data.table)
+library(bibliometrix)
 
 ##################################
 # Perform bibliographic analysis #
@@ -115,6 +114,7 @@ vars <- c('scraped','api','use_data_dumps')
 for (.v in vars) coding[is.na(get(.v)), (.v):=0]
   
 dir.create('../data/',recursive=T)
+dir.create('../output',recursive = T)
 fwrite(coding, '../data/final_coding.csv')
 fwrite(papers, '../data/final_papers.csv')
 save(coding, papers, bib_analysis, file= '../data/citation_database.RData')
