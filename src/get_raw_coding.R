@@ -40,6 +40,6 @@ df$API[is.na(df$API)] <- 0
 df$use_data_dumps[is.na(df$use_data_dumps)] <- 0
 
 colnames(df) <- tolower(colnames(df))
-setnames(df, 'scraped data_source', 'scraped_data_source')
+colnames(df)[which(colnames(df)=='scraped data_source')] <- 'scraped_data_source'
 
 write.csv(df, '../data/coding/coding.csv', row.names=F)
