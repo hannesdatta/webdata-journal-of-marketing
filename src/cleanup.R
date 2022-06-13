@@ -1,0 +1,5 @@
+unlink('../data/*.csv', recursive=F)
+unlink('../data/*.RData', recursive=F)
+unlink('../data/coding/', recursive=T)
+unlink('../temp/', recursive=T)
+unlink('../output/', recursive=T)

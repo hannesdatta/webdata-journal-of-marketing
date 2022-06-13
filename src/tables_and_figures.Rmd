@@ -1,0 +1,112 @@
+---
+title: 'Tables and Figures for "Fields of Gold"'
+author: "Hannes Datta"
+date: "13 June 2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(data.table)
+library(ggplot2)
+library(stringr)
+library(dplyr)
+library(knitr)
+library(tidyverse)
+library(stargazer)
+
+coding <- fread('../data/final_coding.csv')
+
+```
+
+
+# Publications over time
+
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+
+timing = coding[year<=2020, list(N=.N, Nweb=sum(web==T)),by=c('year')]
+timing[, share:=100*(Nweb/N)]
+setorder(timing,year)
+
+timing %>%
+  ggplot(aes(year, Nweb)) +
+  geom_bar(stat = 'identity', fill='grey') +
+  geom_line(aes(x=year, y=share), colour="black", size = 1.5, linetype=1) + 
+  labs(x = "Year of Publication",
+       y = "Number of Articles") +
+  theme_bw() +
+  theme(plot.caption = element_text(hjust = 0.2, face = "italic"),
+        axis.title = element_text(face="bold", size = "13"),
+        legend.title = element_text(face="bold", size = "13"),
+        axis.text.x = element_text(size="8.5")) +
+  scale_x_discrete(limits=c(2001:2020)) +  
+  scale_y_continuous(
+    "Use of Web Data (in %)",
+    sec.axis = sec_axis(~ . * 1.00, name = "Number of Articles")
+  ) + 
+  guides(fill = guide_legend(reverse=T)) +theme(legend.position="bottom")
+
+dir.create('../output/')
+ggsave('../output/barchart_collapsed.png',width=10,height=6)
+ggsave('../output/barchart_collapsed.pdf',width=10,height=6)
+
+```
+
+# Type of output
+
+- Share of papers with scraped data: `r round(100*nrow(coding[web==T&scraped==1&api==0])/nrow(coding[web==T]),1)`%
+- Share of papers with API data: `r round(100*nrow(coding[web==T&scraped==0&api==1])/nrow(coding[web==T]),1)`%
+- Share of papers using both scraped and API data: `r round(100*nrow(coding[web==T&scraped==1&api==1])/nrow(coding[web==T]),1)`%
+- Share of papers not using automatically extracted web data: `r round(100*nrow(coding[web==T&scraped==0&api==0])/nrow(coding[web==T]),1)`%
+
+# Cites per year
+
+```{r, echo = TRUE, echo= FALSE}
+coding[, cites_per_year:=as.numeric(cites)/(2021-year+1+.25)]
+tmp = coding[, list(N=.N, median_cites=median(cites),
+              cites_per_year=median(cites_per_year)),by=c('web')]
+kable(tmp)
+```
+
+# Top publications
+
+```{r, echo = FALSE}
+topx=data.table(coding[web==T])
+setorderv(topx, 'cites_per_year', order=-1L)
+topx[, rank:=1:.N]
+     
+kable(topx[1:30, c('rank','authors','year', 'cites_per_year'),with=F],digits=1, caption = "Top papers in Marketing using Web Data")
+
+```
+
+# Data sources
+```{r, echo = FALSE}
+
+platform_count = coding[web==T, list(
+  any_api = any(api==1),
+  platforms=unique(str_trim(tolower(unlist(strsplit(scraped_data_source,',')))))),
+                          by = c('doi', 'journal')]
+platform_count = platform_count[!platforms=='0']
+platform_count = platform_count[!platforms=='1']
+platform_count = platform_count[platforms=='amazon', platforms:='amazon.com']
+
+tmp = platform_count[, list(JM=uniqueN(doi[journal=='JM']),
+                            JMR=uniqueN(doi[journal=='JMR']),
+                            JCR=uniqueN(doi[journal=='JCR']),
+                            JCP=uniqueN(doi[journal=='JCP']),
+                            MktSci=uniqueN(doi[journal=='MktSci']),
+                            N=uniqueN(doi)
+                            ),by=c('platforms')]
+setorderv(tmp, c('N','platforms'), order=c(-1L,1L))
+
+tmp[, text:=paste0(str_to_title(platforms), ' (', N, ')')]
+tmp[, rank:=1:.N]
+
+kable(tmp[1:30],caption = 'Top Sources')
+
+```
+
+# Remaining stats
+timing[year==2010]
+timing[year==2020]
