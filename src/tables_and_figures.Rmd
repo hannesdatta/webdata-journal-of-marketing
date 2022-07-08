@@ -107,5 +107,7 @@ kable(tmp[1:30],caption = 'Top Sources')
 ```
 
 # Remaining stats
+```{r}
 timing[year==2010]
 timing[year==2020]
+```
