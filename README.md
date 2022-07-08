@@ -1,7 +1,9 @@
 # Fields of Gold: Scraping Web Data for Marketing Insights
-## Replication package
+## Replication package [![DOI](https://zenodo.org/badge/502820580.svg)](https://zenodo.org/badge/latestdoi/502820580)
+
 
 This repository hosts the replication package for "Fields of Gold: Scraping Web Data for Marketing Insights", *Journal of Marketing*. [https://doi.org/10.1177%2F00222429221100750]().
+
 
 Specifically, the repository provides the code and data files to report on the use of web data (i.e., collected using web scraping and APIs) in academic marketing research.
 
