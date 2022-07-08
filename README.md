@@ -21,4 +21,17 @@ Specifically, the repository provides the code and data files to report on the u
 
 ## Running instructions
 
-Please run the `makefile` in `\src` by typing `make` (followed by `<ENTER>` on the command prompt/terminal).
+### Starting the workflow
+
+The project consist of multiple source code files, and its running instructions are formalized in the `makefile` in `\src`. Simply type `make` (followed by `<ENTER>` on the command prompt/terminal). Do make sure to have installed the required software.
+
+### Output
+
+The code generates the figures and tables for the paper, and exports a list of web data papers (including their DOI). 
+
+```
+/output/barchart_collapsed.png
+/output/barchart_collapsed.pdf
+/output/tables_and_figures.html
+/output/webdata_papers.csv
+```
