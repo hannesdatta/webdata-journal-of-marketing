@@ -111,3 +111,10 @@ kable(tmp[1:30],caption = 'Top Sources')
 timing[year==2010]
 timing[year==2020]
 ```
+
+```{r include=FALSE}
+# export list of papers
+tmp = coding[, c('doi','wos_id','year','journal','authors','title_wos'), with=F]
+fwrite(tmp, '../output/webdata_papers.csv')
+
+```
