@@ -35,3 +35,5 @@ The code generates the figures and tables for the paper, and exports a list of w
 /output/tables_and_figures.html
 /output/webdata_papers.csv
 ```
+
+See [here](https://github.com/hannesdatta/webdata-journal-of-marketing/blob/main/output/) for the files.
