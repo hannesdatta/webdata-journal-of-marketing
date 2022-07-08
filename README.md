@@ -8,15 +8,10 @@ This repository empirically investigates the use of web data (i.e., collected us
 
 ## Dependencies
 - [R](https://tilburgsciencehub.com/get/R)
+- [GNU Make](https://tilburgsciencehub.com/get/make)
 - R packages:
 	`install.packages("stargazer", "bibliometrix", "googledrive")`
 
 ## Running instructions
 
-The project consists of three modules.
-
-1. `collect`: API collection for citation data
-2. `prepare`: Data preparation for analysis
-3. `analysis`: Citation analysis and descriptive statistics
-
-Part of the raw data is confidential, and not included in this repository for public download. Please contact the authors for details.
+Please run the `makefile` in `\src` by typing `make` (followed by `<ENTER>` on the command prompt/terminal).
