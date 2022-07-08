@@ -15,6 +15,10 @@ Specifically, the repository provides the code and data files to report on the u
 - R packages:
 	`install.packages("stargazer", "bibliometrix", "googledrive")`
 
+## Other resources
+- [Web companion](https://web-scraping.org) for article
+- [Archive]() of this repository at Zenodo
+
 ## Running instructions
 
 Please run the `makefile` in `\src` by typing `make` (followed by `<ENTER>` on the command prompt/terminal).
